@@ -23,7 +23,7 @@ spec:
           image: biolachs2/lab_orchestrator_novnc:latest
           imagePullPolicy: Always
           ports:
-          - containerPort: 5002
+          - containerPort: 8002
 ---
 apiVersion: v1
 kind: Service
@@ -39,7 +39,7 @@ spec:
     - port: 80 # incoming
       name: httpnovnc
       protocol: TCP
-      targetPort: 5002 # port in the pod
+      targetPort: 8002 # port in the pod
       nodePort: 30003
   type: NodePort
 
