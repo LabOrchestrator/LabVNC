@@ -2,16 +2,30 @@ function load_other_vmi(vmi) {
     var params = new URLSearchParams(window.location.search);
     console.log(vmi);
     var path = params.get("path").split("/");
-    path[1] = vmi;
-    params.set("path", path.join("/"));
-    history.replaceState(null, null, "?"+params.toString());
-    window.location.search = "?" + params.toString();
+    if (path.length == 2) {
+        console.log("No Prefix")
+        path[1] = vmi;
+        params.set("path", path.join("/"));
+        history.replaceState(null, null, "?"+params.toString());
+        window.location.search = "?" + params.toString();
+    } else {
+        console.log("With Prefix")
+        path[2] = vmi;
+        params.set("path", path.join("/"));
+        history.replaceState(null, null, "?"+params.toString());
+        window.location.search = "?" + params.toString();
+    }
 }
 function load_vmis() {
     var params = new URLSearchParams(window.location.search);
     var allowed_vmis = params.get("allowed_vmis").split(",");
     var path = params.get("path").split("/");
-    var current_vmi = path[1];
+    var current_vmi;
+    if (path.length == 2){
+        current_vmi = path[1];
+    } else {
+        current_vmi = path[2];
+    }
     allowed_vmis.forEach(function(vmi) {
         var node = document.createElement("option");
         node.value = vmi;
