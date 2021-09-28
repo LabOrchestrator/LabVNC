@@ -61,7 +61,7 @@ function load_instructions() {
     var decoded = parseJwt(token);
     var lab_id = decoded['lab_instance']['lab_id']
     var xhr = new XMLHttpRequest();
-    var url = `http://localhost:8000/api/instructions/?lab_id=${lab_id}`
+    var url = `http://localhost:8000/api/instruction_page/?lab_id=${lab_id}`
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
