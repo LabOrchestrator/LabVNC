@@ -37,4 +37,42 @@ function load_vmis() {
     });
     document.getElementById("noVNC_setting_vm").addEventListener("change", e => load_other_vmi(e.target.value));
 }
+
+const parseJwt = (token) => {
+  // this method is insecure because the signature is not verified
+  // to verify the signature an asymmetric method needs to be used
+  // when generating the token
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
+};
+
+function load_instructions() {
+    var params = new URLSearchParams(window.location.search);
+    var path = params.get("path").split("/");
+    var token;
+    if (path.length == 2){
+        token = path[0];
+    } else {
+        token = path[1];
+    }
+    var decoded = parseJwt(token);
+    var lab_id = decoded['lab_instance']['lab_id']
+    var xhr = new XMLHttpRequest();
+    var url = `http://localhost:8000/api/instruction_page/?lab_id=${lab_id}`
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+            console.log(json)
+            // TODO: insert pages into #instructionsbox
+        }
+    }
+    xhr.send();
+}
+
+
 window.onload = load_vmis;
+window.onload = load_instructions;

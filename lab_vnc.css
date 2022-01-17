@@ -1,0 +1,13 @@
+#novncbox {
+    float: left;
+    width: 80%;
+}
+
+#instructionsbox {
+    float: right;
+    width: 20%;
+    height: 100%;
+    color: white;
+    border-left: 1px solid white;
+    padding: 10px;
+}
